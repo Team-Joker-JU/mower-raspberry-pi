@@ -41,12 +41,10 @@ class RobotCharacteristics:
             return list(int(self.robot.is_paired).to_bytes(1, byteorder='little', signed=True))
         
         def notify(self, notifying, characteristic):
-            print("Hej")
             characteristic.set_value(self.read())
             return notifying
         
         def write(self, value, options):
-            print("Hejjj")
             packet = RobotPacket(RobotCommand.HANDSHAKE)
             self.event_queue.put(packet)
         
