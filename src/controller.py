@@ -5,7 +5,7 @@ from threading import Thread, Event
 
 from robotperipheral import RobotPeripheral
 from robotserial     import RobotSerial
-from robot           import Robot
+from robotstate      import RobotState
 class Controller:
     
     queue_peripheral = Queue(maxsize=0)
@@ -13,7 +13,7 @@ class Controller:
     
     def __init__(self):
 
-        self.peripheral = RobotPeripheral(blepy.Adapter.get_available_address(), Robot(), self.queue_peripheral)
+        self.peripheral = RobotPeripheral(blepy.Adapter.get_available_address(), RobotState(), self.queue_peripheral)
         self.serial     = RobotSerial('/dev/ttyACM0', 38400, 1, self.queue_serial)
         
         self.workers = [
