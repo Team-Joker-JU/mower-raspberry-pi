@@ -1,5 +1,5 @@
 class RobotState:    
-    _paired = True
+    _paired = False
 
     def is_paired(self) -> bool:
         return self._paired

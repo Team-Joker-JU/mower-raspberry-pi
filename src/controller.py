@@ -8,13 +8,14 @@ from robotserial     import RobotSerial
 from robotstate      import RobotState
 class Controller:
     
+    state            = RobotState()
     queue_peripheral = Queue(maxsize=0)
     queue_serial     = Queue(maxsize=0)
     
     def __init__(self):
-
-        self.peripheral = RobotPeripheral(blepy.Adapter.get_available_address(), RobotState(), self.queue_peripheral)
-        self.serial     = RobotSerial('/dev/ttyACM0', 38400, 1, self.queue_serial)
+        
+        self.peripheral = RobotPeripheral(blepy.Adapter.get_available_address(), self.state, self.queue_peripheral)
+        self.serial     = RobotSerial('/dev/ttyACM0', 9600, 1, self.state, self.queue_serial)
         
         self.workers = [
             Thread(target=self.peripheral.publish),

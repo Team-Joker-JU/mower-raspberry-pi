@@ -19,7 +19,8 @@ class RobotPacket(bytearray):
     
     def _to_int_switch(self, command: RobotCommand) -> Callable:
         return {
-            RobotCommand.ACCELERATION: self._to_int8_bytearray
+            RobotCommand.ACCELERATION: self._to_int8_bytearray,
+            RobotCommand.STEERING: self._to_int8_bytearray
         }[command]
     
     def _to_int8_bytearray(self, value):

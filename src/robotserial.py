@@ -1,18 +1,21 @@
+from queue import Queue
+
 from robotpacket import RobotPacket
 from robotcommand import RobotCommand
+from robotstate import RobotState
 
 import serial
-import time
 
 class RobotSerial:
-    def __init__(self, port, baudrate, timeout, event_queue):
+    def __init__(self, port, baudrate, timeout, state: RobotState, event_queue: Queue):
         self.event_queue = event_queue
+        self.state = state
         self.serial = serial.Serial(port, baudrate, timeout=timeout)
         self.serial.flush()
     # use Threading Event??
     def begin(self):
         while True:
-            time.sleep(50)
+            # delay?
             if self.serial.in_waiting > 0:
                 print("Received data from RobotSerial: " + str(self.serial.readline()))
            
