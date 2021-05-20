@@ -14,13 +14,20 @@ class RobotPacket(bytearray):
         return RobotCommand(struct.unpack('<b', self[0:1])[0])
     
     def get_parameter(self) -> int:
-        # Denna borde fixas
-        return struct.unpack('<l', self[1:5])[0]
+        unpacker = {
+            RobotCommand.ACCELERATION: self._to_int8,
+            RobotCommand.STEERING: self._to_int8,
+            RobotCommand.COLLISION: self._to_int8
+        }
+        
+        unpack = unpacker.get(self.get_command())
+        return unpack(self, 1)
     
     def _to_int_switch(self, command: RobotCommand) -> Callable:
         return {
             RobotCommand.ACCELERATION: self._to_int8_bytearray,
-            RobotCommand.STEERING: self._to_int8_bytearray
+            RobotCommand.STEERING: self._to_int8_bytearray,
+            RobotCommand.COLLISION: self._to_int8_bytearray
         }[command]
     
     def _to_int8_bytearray(self, value):
@@ -31,3 +38,12 @@ class RobotPacket(bytearray):
     
     def _to_int32_bytearray(self, value):
         return struct.pack('<l', value)
+    
+    def _to_int8(self, value, offset):
+        return struct.unpack('<b', value[offset:offset+1])[0]
+    
+    def _to_int16(self, value, offset):
+        return struct.unpack('<h', value[offset:offset+2])[0]
+    
+    def _to_int32(self, value, offset):
+        return struct.unpack('<l', value[offset:offset+4])[0]
