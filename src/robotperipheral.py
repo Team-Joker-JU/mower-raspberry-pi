@@ -57,7 +57,8 @@ class RobotService(blepy.Service):
         self.characteristics = [
             RobotCharacteristics.Acceleration(state, event_queue, notifiers),
             RobotCharacteristics.Steering(state, event_queue, notifiers),
-            RobotCharacteristics.Collision(state, event_queue, notifiers)
+            RobotCharacteristics.Collision(state, event_queue, notifiers),
+            RobotCharacteristics.Automove(state, event_queue, notifiers),
         ]
 
 class RobotCharacteristics:
@@ -100,4 +101,15 @@ class RobotCharacteristics:
             self.notifiers["Collision"] = characteristic if notifying else None
             return notifying
 
+    class Automove(blepy.Characteristic):
+        
+        def __init__(self, state: RobotState, event_queue: Queue, notifiers: map):
+            super().__init__("12341005-1234-1234-1234-123456789abc", event_queue)
+            self.flags = ['write']
+            self.write_callback = self.write
+            self.notifiers = notifiers
+        
+        def write(self, value, options):
+            packet = RobotPacket(RobotCommand.MODE)
+            self.event_queue.put(packet)
 
