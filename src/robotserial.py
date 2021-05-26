@@ -35,15 +35,15 @@ class RobotSerial:
                 RobotCommand.DISCONNECTED: 0,
                 RobotCommand.ACCELERATION: 1,
                 RobotCommand.STEERING: 1,
-                RobotCommand.COLLISION: 1
+                RobotCommand.COLLISION: 1,
+                RobotCommand.POSITION: 64
             }
             
             n = bytes_to_read.get(command);
             parameter = None
             
             if (n > 0):
-                array = self.serial.read(n);
-                parameter = int.from_bytes(array, "big");
+                parameter = self.serial.read(n);
             
             packet = RobotPacket(command, parameter)
             self.event_queue.put(packet);
