@@ -25,8 +25,12 @@
 </table>
 
 ## Connect to robot
-Run program
-`/mower-raspberry-pi/src/main.py ARG1 ARG2`
+1. Start Raspberry pi
+2. Run program `/mower-raspberry-pi/src/main.py ARG1 ARG2`
+
+<br>
+
+Explanation of arguments passed to program
 <table border=1>
     <tr>
             <th>Name</th>
@@ -41,7 +45,3 @@ Run program
             <td>Baudrate, for example `115200` is often used in our case</td>
     </tr>
 </table>
-
-## When Raspberry pi receives power
-`/mower-raspberry-pi/src/main.py /dev/ttyUSB0 115200`<br>
-is executed and the raspberry is ready to connect with bluetooth
