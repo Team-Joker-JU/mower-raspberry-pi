@@ -28,8 +28,10 @@ class RobotPacket(bytearray):
         if (command is RobotCommand.ACCELERATION or
             command is RobotCommand.STEERING or
             command is RobotCommand.COLLISION):
-            return self._to_int8_bytearray(int.from_bytes(parameter, "big"));
-        
+            if (type(parameter) != int):
+                parameter = int.from_bytes(parameter, "big")
+            print(parameter)
+            return self._to_int8_bytearray(parameter);
         if (command is RobotCommand.POSITION):
             return parameter;
     
@@ -56,4 +58,4 @@ class RobotPacket(bytearray):
     
     def _to_string(self, value, offset):
         length = len(value)
-        return str(value[offset, length], 'ascii')
+        return str(value[offset:length], 'ascii')
