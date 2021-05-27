@@ -30,7 +30,6 @@ class RobotPacket(bytearray):
             command is RobotCommand.COLLISION):
             if (type(parameter) != int):
                 parameter = int.from_bytes(parameter, "big")
-            print(parameter)
             return self._to_int8_bytearray(parameter);
         if (command is RobotCommand.POSITION):
             return parameter;

@@ -36,12 +36,12 @@ class Controller:
         for w in self.workers:
             w.join()
             
-    def createRequest(self, x, y):
+    def createRequest(self, x, y, collision):
         API_ENDPOINT = 'https://ims_api.supppee.workers.dev/api/coord/'
         
         data = {
-            "session": "Hej emil",
-            "collision": False,
+            "session": "Hej Oscar",
+            "collision": collision,
             "X": x,
             "Y": y,
         }
@@ -53,10 +53,15 @@ class Controller:
     
     def _local_event_handler(self, packet: RobotPacket):
         if (packet.get_command() == RobotCommand.POSITION):
-            xAndY = packet.get_parameter().split("~")
-            x = float(xAndY[0][0:4])
-            y = float(xAndY[1][0:4])
-            self.createRequest(x, y)
+            print(packet.get_parameter())
+            xAndYAndCollision = packet.get_parameter().split("~")
+            x = float(xAndYAndCollision[0][0:4])
+            y = float(xAndYAndCollision[1][0:4])
+            collision = xAndYAndCollision[2][0:1]
+            print(xAndYAndCollision)
+            collision = True if collision == "1" else False
+            
+            self.createRequest(x, y, collision)
         
     
     def _queue_work(self, q, handler):
