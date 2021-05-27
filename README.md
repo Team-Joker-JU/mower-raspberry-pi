@@ -8,6 +8,11 @@
         <th>Download link</th>
     </tr>
     <tr>
+        <td>python3</td>
+        <td> - </td>
+        <td>https://www.python.org/downloads/</td>
+    </tr>
+    <tr>
         <td>blepy</td>
         <td>pip install blepy</td>
         <td>https://pypi.org/project/blepy/</td>       
@@ -23,6 +28,8 @@
         <td>https://docs.python.org/3/library/argparse.html</td>
     </tr>
 </table>
+
+
 
 ## Connect to robot
 1. Start Raspberry pi
