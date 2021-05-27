@@ -6,4 +6,5 @@ class RobotCommand(IntEnum):
     ACCELERATION = 2,
     STEERING = 3,
     COLLISION = 4,
-    MODE = 5
+    MODE = 5,
+    POSITION = 6

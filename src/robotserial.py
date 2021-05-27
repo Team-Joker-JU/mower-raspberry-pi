@@ -8,7 +8,6 @@ import serial
 
 class RobotSerial:
     def __init__(self, port, baudrate, timeout, state: RobotState, event_queue: Queue):
-        print("Hello")
         self.event_queue = event_queue
         self.state = state
         self.serial = serial.Serial(port, baudrate, timeout=timeout)
@@ -23,7 +22,7 @@ class RobotSerial:
         self.serial.write(packet)
         
     def event_handler(self, packet: RobotPacket):
-        self.write(packet);
+        self.write(packet)
         
     def process_message_protocol(self):
         if self.serial.in_waiting > 0:
@@ -35,16 +34,17 @@ class RobotSerial:
                 RobotCommand.DISCONNECTED: 0,
                 RobotCommand.ACCELERATION: 1,
                 RobotCommand.STEERING: 1,
-                RobotCommand.COLLISION: 1
+                RobotCommand.COLLISION: 1,
+                RobotCommand.POSITION: 24
             }
             
             n = bytes_to_read.get(command);
             parameter = None
-            
+
             if (n > 0):
-                array = self.serial.read(n);
-                parameter = int.from_bytes(array, "big");
+                parameter = self.serial.read(n);
             
             packet = RobotPacket(command, parameter)
             self.event_queue.put(packet);
+            
         
